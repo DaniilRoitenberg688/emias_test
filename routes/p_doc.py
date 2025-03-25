@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from models import PDoc
 from services.p_doc import create_p_doc, get_p_doc, update_p_doc, delete_p_doc
 from database import get_session
-from pydantic import BaseModel, Field, validator, field_serializer
+from pydantic import BaseModel, Field, validator, field_serializer, ConfigDict
 from typing import Annotated
 from datetime import datetime
 router = APIRouter(prefix="/p_doc", tags=["p_doc"])
@@ -13,6 +13,7 @@ class PDocIn(BaseModel):
     num: Annotated[str, Field(min_length=6, max_length=6)]
     give_place: Annotated[str, Field(min_length=1, max_length=100)]
     give_date: Annotated[datetime, Field(format="DD-MM-YYYY", example='12-12-1212')]
+
     @validator('give_date', pre=True)
     def parse_date(cls, value):
         return datetime.strptime(
@@ -22,6 +23,7 @@ class PDocIn(BaseModel):
 
 
 class PDocOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     id: int
     ser: str
     num: str

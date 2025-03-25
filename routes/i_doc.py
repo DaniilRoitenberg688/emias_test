@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from database import get_session
 from models import IDoc
 from services import create_i_doc, get_i_doc, update_i_doc, delete_i_doc
-from pydantic import BaseModel, Field, validator, field_serializer
+from pydantic import BaseModel, Field, validator, field_serializer, ConfigDict
 from typing import Annotated
 from datetime import datetime
 
@@ -22,6 +22,7 @@ class IDocIn(BaseModel):
         ).date()
 
 class IDocOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     id: int
     ser: str
     num: str
