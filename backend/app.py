@@ -6,8 +6,17 @@ from routes.p_doc import router as p_docs_router
 from routes.i_doc import router as i_doc_router
 from routes.patient import router as patient_router
 from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # @app.exception_handler(RequestValidationError)

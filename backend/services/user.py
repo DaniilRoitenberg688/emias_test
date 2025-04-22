@@ -2,6 +2,8 @@ from models import User
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from fastapi import HTTPException
+
+
 async def create_user(session: AsyncSession, name: str, surname: str):
     user = User()
     user.name = name
@@ -27,7 +29,7 @@ async def delete_user(session: AsyncSession, user_id: int):
     user = await session.get(User, user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
-    session.delete(user)
+    await session.delete(user)
     await session.commit()
 
 async def update_user(session: AsyncSession, user_id: int, name: str, surname: str):

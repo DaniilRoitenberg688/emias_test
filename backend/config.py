@@ -12,6 +12,8 @@ class Config:
     DB_NAME = os.getenv("DB_NAME")
     DATABASE_SQLITE = 'sqlite+aiosqlite:///test.db'
     DATABASE_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    print(DATABASE_URL)
+
 
 
 config = Config()
